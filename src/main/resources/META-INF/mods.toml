@@ -1,0 +1,34 @@
+modLoader = "javafml"
+loaderVersion = "[31,)"
+issueTrackerURL = "https://github.com/GrowthcraftCE/Growthcraft-1.15-Trapper/issues"
+
+[[mods]]
+modId = "growthcraft_trapper"
+version = "5.0.0"
+displayName = "Growthcraft"
+updateJSONURL = "https://raw.githubusercontent.com/GrowthcraftCE/Growthcraft-Updates/master/growthcraft-trapper-versions.json"
+displayURL = "https://github.com/GrowthcraftCE/Growthcraft-1.15-Trapper/wiki"
+logoFile = "growthcraft_trapper_logo.png"
+credits = "Thanks to Gwafu for starting a great mod. And the Growthcraft CE Development for continuing the work."
+authors = "Alatyami, CoffeeThief"
+description = '''
+    Growtchraft Trapper is a realistic and immersive Forge mod that adds various new trapping elements to the game of Minecraft.
+    '''
+
+[[dependencies.growthcraft_trapper]]
+modId = "forge"
+mandatory = true
+versionRange = "[31,)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.growthcraft_trapper]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.15.2]"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.growthcraft_trapper]]
+modId = "patchouli"
+mandatory = false
+versionRange = "[1.15.2-1.2-32,)"
+side = "BOTH"
