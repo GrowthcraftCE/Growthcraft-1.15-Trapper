@@ -9,12 +9,12 @@ public class GrowthcraftTrapperBlockRenders {
     private GrowthcraftTrapperBlockRenders() { /* Disable default public constructor */ }
 
     public static void setRenderLayers() {
-        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.oakFishtrap.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.acaciaFishtrap.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.darkOakFishtrap.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.spruceFishtrap.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.jungleFishtrap.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.birchFishtrap.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.FISHTRAP_OAK.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.FISHTRAP_ACACIA.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.FISHTRAP_DARKOAK.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.FISHTRAP_SPRUCE.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.FISHTRAP_JUNGLE.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(GrowthcraftTrapperBlocks.FISHTRAP_BIRCH.get(), RenderType.getCutout());
     }
 
 }

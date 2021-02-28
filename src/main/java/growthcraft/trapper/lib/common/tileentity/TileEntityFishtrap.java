@@ -1,5 +1,6 @@
 package growthcraft.trapper.lib.common.tileentity;
 
+import growthcraft.trapper.init.GrowthcraftTrapperTileEntities;
 import growthcraft.trapper.lib.common.block.FishtrapBlock;
 import growthcraft.trapper.lib.common.inventory.ContainerFishtrap;
 import growthcraft.trapper.lib.utils.BlockStateUtils;
@@ -51,11 +52,15 @@ public class TileEntityFishtrap extends LockableLootTileEntity implements ISided
     private NonNullList<ItemStack> inventoryItemStacks = NonNullList.withSize(7, ItemStack.EMPTY);
     private LootTable lootTable;
     private int tickCounter = 0;
-    private int randomTickCooldown = 0;
+    private int randomTickCooldown;
 
     public TileEntityFishtrap(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
         randomTickCooldown = getRandomTickCooldown();
+    }
+
+    public TileEntityFishtrap() {
+        this(GrowthcraftTrapperTileEntities.acaciaFishtrapTileEntity.get());
     }
 
     public static void swapContents(TileEntityFishtrap tileEntityFishtrapOne, TileEntityFishtrap tileEntityFishtrapTwo) {
@@ -88,7 +93,6 @@ public class TileEntityFishtrap extends LockableLootTileEntity implements ISided
             } else {
                 return itemHandlers[2].cast();
             }
-            //return itemHandler.cast();
         }
         return super.getCapability(capability, side);
     }

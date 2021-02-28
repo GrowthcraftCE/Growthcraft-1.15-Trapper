@@ -42,10 +42,10 @@ public class GrowthcraftTrapper {
         @Override
         public ItemStack createIcon() {
             // TODO: Check if Growthcraft core is installed and use the main itemGroup instead.
-            return new ItemStack(GrowthcraftTrapperBlocks.oakFishtrap.get());
+            return new ItemStack(GrowthcraftTrapperBlocks.FISHTRAP_OAK.get());
         }
     };
-    public static IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+    public static final IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
     public GrowthcraftTrapper() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);

@@ -12,42 +12,33 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class GrowthcraftTrapperBlocks {
+
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MODID);
 
-    /* TODO[13]: Implement oakFishtrap */
-    public static final RegistryObject<BlockOakFishtrap> oakFishtrap;
-    public static final RegistryObject<BlockAcaciaFishtrap> acaciaFishtrap;
-    public static final RegistryObject<BlockDarkOakFishtrap> darkOakFishtrap;
-    public static final RegistryObject<BlockBirchFishtrap> birchFishtrap;
-    public static final RegistryObject<BlockJungleFishtrap> jungleFishtrap;
-    public static final RegistryObject<BlockSpruceFishtrap> spruceFishtrap;
-
-    static {
-        oakFishtrap = BLOCKS.register(
-                UnlocalizedName.FISHTRAP_OAK,
-                () -> new BlockOakFishtrap()
-        );
-        acaciaFishtrap = BLOCKS.register(
-                UnlocalizedName.FISHTRAP_ACACIA,
-                () -> new BlockAcaciaFishtrap()
-        );
-        darkOakFishtrap = BLOCKS.register(
-                UnlocalizedName.FISHTRAP_DARK_OAK,
-                () -> new BlockDarkOakFishtrap()
-        );
-        birchFishtrap = BLOCKS.register(
-                UnlocalizedName.FISHTRAP_BIRCH,
-                () -> new BlockBirchFishtrap()
-        );
-        jungleFishtrap = BLOCKS.register(
-                UnlocalizedName.FISHTRAP_JUNGLE,
-                () -> new BlockJungleFishtrap()
-        );
-        spruceFishtrap = BLOCKS.register(
-                UnlocalizedName.FISHTRAP_SPRUCE,
-                () -> new BlockSpruceFishtrap()
-        );
-    }
+    public static final RegistryObject<BlockOakFishtrap> FISHTRAP_OAK = BLOCKS.register(
+            UnlocalizedName.FISHTRAP_OAK,
+            BlockOakFishtrap::new
+    );
+    public static final RegistryObject<BlockAcaciaFishtrap> FISHTRAP_ACACIA = BLOCKS.register(
+            UnlocalizedName.FISHTRAP_ACACIA,
+            BlockAcaciaFishtrap::new
+    );
+    public static final RegistryObject<BlockDarkOakFishtrap> FISHTRAP_DARKOAK = BLOCKS.register(
+            UnlocalizedName.FISHTRAP_DARK_OAK,
+            BlockDarkOakFishtrap::new
+    );
+    public static final RegistryObject<BlockBirchFishtrap> FISHTRAP_BIRCH = BLOCKS.register(
+            UnlocalizedName.FISHTRAP_BIRCH,
+            BlockBirchFishtrap::new
+    );
+    public static final RegistryObject<BlockJungleFishtrap> FISHTRAP_JUNGLE = BLOCKS.register(
+            UnlocalizedName.FISHTRAP_JUNGLE,
+            BlockJungleFishtrap::new
+    );
+    public static final RegistryObject<BlockSpruceFishtrap> FISHTRAP_SPRUCE = BLOCKS.register(
+            UnlocalizedName.FISHTRAP_SPRUCE,
+            BlockSpruceFishtrap::new
+    );
 
     private GrowthcraftTrapperBlocks() { /* Prevent default public constructor */ }
 

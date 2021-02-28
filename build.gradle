@@ -1,23 +1,48 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
         mavenCentral()
+        jcenter()
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7'
     }
 }
+
+plugins {
+    id 'org.sonatype.gradle.plugins.scan' version '1.2.0' // Update the version as needed
+}
+
 apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'org.sonarqube'
 
-version = '1.0'
-group = 'com.yourname.modid' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'modid'
+sonarqube {
+    properties {
+        property "sonar.projectName" , "Growthcraft-Trapper-" + project.minecraft_version_short
+        property "sonar.projectKey", "growthcraft:Growthcraft-" + project.minecraft_version_short
+    }
+}
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+repositories {
+    mavenLocal()
+    // JEI, Tinker's Construct, Mantle, Iron Chests, Natura, etc.
+    maven { url = "https://dvs1.progwml6.com/files/maven" }
+    // The One Probe
+    maven { url = "http://maven.tterrag.com/" }
+    // Patchouli
+    maven { url = 'https://maven.blamejared.com' }
+    maven { url = 'https://oss.sonatype.org/content/groups/public/' }
+}
+
+version = project.minecraft_version + '-' + project.growthcraft_version
+group = 'growthcraft'
+archivesBaseName = 'growthcraft-trapper'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
     // The mappings can be changed at any time, and must be in the following format.
@@ -25,23 +50,16 @@ minecraft {
     // stable_#            Stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'snapshot', version: '20200514-1.15.1'
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-    
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    //mappings channel: 'snapshot', version: '20200217-1.15.1'
+    mappings channel: 'snapshot', version: '20200706-1.15.1'
 
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
+    //mappings channel: 'stable', version: '60'
+
     runs {
         client {
             workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-
             mods {
                 examplemod {
                     source sourceSets.main
@@ -51,13 +69,8 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-
             mods {
                 examplemod {
                     source sourceSets.main
@@ -67,15 +80,9 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
-
+            args '--mod', 'growthcraft', '--all', '--output', file('src/generated/resources/')
             mods {
                 examplemod {
                     source sourceSets.main
@@ -86,56 +93,66 @@ minecraft {
 }
 
 dependencies {
-    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
-    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
-    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.15.2-31.2.0'
+    minecraft 'net.minecraftforge:forge:' + project.forge_version
 
-    // You may put jars on which you depend on in ./libs or you may define them like so..
-    // compile "some.group:artifact:version:classifier"
-    // compile "some.group:artifact:version"
+    /** Compile time Dependencies
+     * Include mods that we have a direct dependency with.
+     */
+    compile fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}:api")
 
-    // Real examples
-    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // These dependencies get remapped to your current MCP mappings
-    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+    /** Runtime Dependencies
+     *  Include mods the we need while testing during runtime. When adding mods
+     *  to this list, place the version into the gradle.properties file.
+     */
+    runtime fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
+    runtime fg.deobf("mcjty.theoneprobe:TheOneProbe-${minecraft_version_short}:${minecraft_version_short}-${theoneprobe_version}")
+    runtime fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
 
 }
 
-// Example for how to get properties into the manifest for reading by the runtime..
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'src'
+}
+
+task deobjJar(type: Jar) {
+    from sourceSets.main.output
+    classifier 'deobf'
+}
+
+artifacts {
+    archives sourcesJar, deobjJar
+}
+
 jar {
     manifest {
         attributes([
-            "Specification-Title": "examplemod",
-            "Specification-Vendor": "examplemodsareus",
-            "Specification-Version": "1", // We are version 1 of ourselves
+            "Specification-Title": "growthcraft-trapper",
+            "Specification-Vendor": "growthcraft",
+            "Specification-Version": "5",
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"examplemodsareus",
+            "Implementation-Vendor" :"growthcraft",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
 
 // Example configuration to allow publishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar') 
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
+// we define a custom artifact that is sourced from the reobfJar output task
+// and then declare that to be published
+// Note you'll need to add a repository here
+//def reobfFile = file("$buildDir/reobfJar/output.jar")
+//def reobfArtifact = artifacts.add('default', reobfFile) {
+//    type 'jar'
+//    builtBy 'reobfJar'
+//}
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             artifact jar
+            artifact sourcesJar
         }
     }
     repositories {
@@ -143,4 +160,11 @@ publishing {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
     }
+}
+
+ossIndexAudit {
+    allConfigurations = true
+    useCache = false
+    cacheDirectory = '.nexus/audit'
+    cacheExpiration = 'PT12H'
 }

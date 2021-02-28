@@ -19,18 +19,7 @@ public class GrowthcraftTrapperConfig {
     public static final ForgeConfigSpec SERVER;
     public static final ForgeConfigSpec CLIENT;
 
-    // Private ForgeConfigSpec Definitions
-
-    /**
-     * Placeholder for ForgeConfigSpec definitions.
-     * <pre>
-     *     private static ForgeConfigSpec.BooleanValue enableAppleTreeGen;
-     * </pre>
-     */
-
     static {
-        initWorldGenConfig(SERVER_BUILDER);
-
         SERVER = SERVER_BUILDER.build();
         CLIENT = CLIENT_BUILDER.build();
     }
@@ -50,34 +39,4 @@ public class GrowthcraftTrapperConfig {
         configSpec.setConfig(fileConfig);
     }
 
-    /**
-     * World generation settings for Growthcraft Apples. World generation is server side only.
-     *
-     * @param server Server side ForgeConfigSpec builder
-     */
-    public static void initWorldGenConfig(ForgeConfigSpec.Builder server) {
-        server.push("general");
-        server.comment(String.format("General configuration for %s.", Reference.NAME)).define("general.version", Reference.VERSION);
-        server.pop();
-        /**
-         * Placeholder for setting configuration values.
-         * <pre>
-         *     enableAppleTreeGen = server
-         *                 .comment("Enable/Disable the world generation of Apple Trees.")
-         *                 .define("worldgen.apple_trees.enabled", true);
-         * </pre>
-         */
-
-    }
-
-    // region Getters
-    /**
-     * Placeholder for configuration getters.
-     * <pre>
-     *     public boolean appleTreeGenEnabled() {
-     *         return enableAppleTreeGen.get();
-     *     }
-     * </pre>
-     */
-    // endregion
 }
