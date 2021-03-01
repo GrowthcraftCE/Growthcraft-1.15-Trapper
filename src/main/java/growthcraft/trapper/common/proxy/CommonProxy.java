@@ -8,7 +8,7 @@ public class CommonProxy implements IProxy {
 
     @Override
     public void init() {
-
+        /* Nothing to do here yet. */
     }
 
     @Override

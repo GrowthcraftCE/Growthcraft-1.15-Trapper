@@ -37,9 +37,9 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class TileEntityFishtrap extends LockableLootTileEntity implements ISidedInventory, ITickableTileEntity {
 
@@ -70,7 +70,7 @@ public class TileEntityFishtrap extends LockableLootTileEntity implements ISided
     }
 
     private int getRandomTickCooldown() {
-        return new Random().nextInt(maxTickFishing - minTickFishing) + minTickFishing;
+        return new SecureRandom().nextInt(maxTickFishing - minTickFishing) + minTickFishing;
     }
 
     @Override
@@ -288,7 +288,7 @@ public class TileEntityFishtrap extends LockableLootTileEntity implements ISided
 
     private List<ItemStack> getLootItemStack() {
         assert world != null;
-        return lootTable.generate(new LootContext.Builder((ServerWorld) world).withRandom(new Random()).build(LootParameterSets.EMPTY));
+        return lootTable.generate(new LootContext.Builder((ServerWorld) world).withRandom(new SecureRandom()).build(LootParameterSets.EMPTY));
     }
 
     @Override
