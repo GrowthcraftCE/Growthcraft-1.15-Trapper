@@ -12,7 +12,7 @@ buildscript {
 }
 
 plugins {
-    id 'org.sonatype.gradle.plugins.scan' version '1.2.0' // Update the version as needed
+    id "org.sonarqube" version "3.1.1"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -22,8 +22,9 @@ apply plugin: 'org.sonarqube'
 
 sonarqube {
     properties {
-        property "sonar.projectName" , "Growthcraft-Trapper-" + project.minecraft_version_short
-        property "sonar.projectKey", "growthcraft:Growthcraft-" + project.minecraft_version_short
+        property "sonar.projectKey", "GrowthcraftCE_Growthcraft-1.15-Trapper"
+        property "sonar.organization", "growthcraftce"
+        property "sonar.host.url", "https://sonarcloud.io"
     }
 }
 
