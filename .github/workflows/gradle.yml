@@ -32,6 +32,7 @@ jobs:
           java-version: 11
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
+      - name: Analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
