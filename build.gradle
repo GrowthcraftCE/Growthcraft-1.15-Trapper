@@ -152,10 +152,3 @@ publishing {
         }
     }
 }
-
-ossIndexAudit {
-    allConfigurations = true
-    useCache = false
-    cacheDirectory = '.nexus/audit'
-    cacheExpiration = 'PT12H'
-}
